@@ -1,2 +1,9 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/">
+        <file>elephant.png</file>
+        <file>grass.png</file>
+        <file>ground.png</file>
+        <file>sky.png</file>
+        <file>trees.png</file>
+    </qresource>
+</RCC>
