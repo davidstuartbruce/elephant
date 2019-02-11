@@ -1,15 +1,14 @@
 #include <QKeyEvent>
 #include "myscene.h"
 
-MyScene::MyScene()
-{
-    // set initial values - these may need to be fixed!
-    m_fieldWidth = 500;
-    m_minX = 0;
-    m_maxX = 500;
-    m_currentX = 0;
-    m_groundLevel = 0;
+MyScene::MyScene(QObject* parent) :
+    QGraphicsScene(parent),
+    m_fieldWidth(1500),
+    m_minX(0),
+    m_maxX(1500),
+    m_groundLevel(300)
 
+{
     m_timer.setInterval(30);
     connect(&m_timer, &QTimer::timeout,
             this, &MyScene::movePlayer);
@@ -41,5 +40,9 @@ void MyScene::addHorizontalInput(int input) {
     checkTimer();
 }
 void MyScene::checkTimer() {
-    return;
+    if (m_player->direction() == 0) {
+        m_timer.stop();
+    } else if (!m_timer.isActive()) {
+        m_timer.start();
+    }
 }

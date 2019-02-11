@@ -10,7 +10,7 @@
 class MyScene : public QGraphicsScene
 {
 public:
-    MyScene();
+    MyScene(QObject* parent);
 private:
     int m_fieldWidth;
     qreal m_minX;
