@@ -1,12 +1,15 @@
 #include <QKeyEvent>
 #include "myscene.h"
+#include "player.h"
+
 
 MyScene::MyScene(QObject* parent) :
     QGraphicsScene(parent),
     m_fieldWidth(1500),
     m_minX(0),
     m_maxX(1500),
-    m_groundLevel(300)
+    m_groundLevel(300),
+    m_velocity(0)
 
 {
     m_timer.setInterval(30);
@@ -15,8 +18,16 @@ MyScene::MyScene(QObject* parent) :
 }
 
 void MyScene::movePlayer() {
-    // do nothing for now
-    return;
+    const int direction = m_player->direction();
+    if (0 == direction) {
+        return;
+    }
+    const int dx = direction * m_velocity;
+    qreal newX = qBound(m_minX, m_currentX + dx, m_maxX);
+    if (newX == m_currentX) {
+        return;
+    }
+    m_currentX = newX;
 }
 
 void MyScene::keyPressEvent(QKeyEvent *event) {

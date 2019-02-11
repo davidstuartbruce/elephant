@@ -3,16 +3,17 @@
 
 #include <QGraphicsScene>
 #include <QTimer>
-#include "player.h"
 
-
+class Player;
 
 class MyScene : public QGraphicsScene
 {
+
 public:
-    MyScene(QObject* parent);
+    explicit MyScene(QObject* parent);
 private:
     int m_fieldWidth;
+    int m_velocity;
     qreal m_minX;
     qreal m_maxX;
     qreal m_currentX;
@@ -27,8 +28,6 @@ private:
 private slots:
     void movePlayer();
 
-
-    // QGraphicsScene interface
 protected:
     void keyPressEvent(QKeyEvent *event);
 };
