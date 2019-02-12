@@ -6,6 +6,7 @@
 
 class Player;
 class BackgroundItem;
+class QPropertyAnimation;
 
 class MyScene : public QGraphicsScene
 {
@@ -49,6 +50,7 @@ private:
     BackgroundItem* m_sky;
     BackgroundItem* m_trees;
     BackgroundItem* m_grass;
+    QPropertyAnimation* m_jumpAnimation;
 
     int m_horizontalInput;
 

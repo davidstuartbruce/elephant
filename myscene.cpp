@@ -1,6 +1,9 @@
 #include <QKeyEvent>
+#include <QPropertyAnimation>
+
 #include <float.h>
 #include <cmath>
+
 #include "myscene.h"
 #include "player.h"
 #include "backgrounditem.h"
@@ -23,6 +26,14 @@ MyScene::MyScene(QObject* parent) :
     m_timer.setInterval(30);
     connect(&m_timer, &QTimer::timeout,
             this, &MyScene::movePlayer);
+
+    m_jumpAnimation = new QPropertyAnimation(this);
+    m_jumpAnimation->setTargetObject(this);
+    m_jumpAnimation->setPropertyName("jump factor");
+    m_jumpAnimation->setStartValue(0);
+    m_jumpAnimation->setKeyValueAt(0.5, 1);
+    m_jumpAnimation->setDuration(800);
+    m_jumpAnimation->setEasingCurve(QEasingCurve::OutInQuad);
 }
 
 qreal MyScene::jumpFactor() const
