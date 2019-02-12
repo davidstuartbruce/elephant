@@ -7,11 +7,11 @@
 MyScene::MyScene(QObject* parent) :
     QGraphicsScene(parent),
     m_fieldWidth(1500),
+    m_velocity(4),
+    m_worldShift(0),
     m_minX(0),
     m_maxX(0),
     m_groundLevel(300),
-    m_velocity(4),
-    m_worldShift(0),
     m_player(nullptr),
     m_sky(nullptr),
     m_trees(nullptr),
@@ -36,9 +36,9 @@ void MyScene::movePlayer() {
     m_currentX = newX;
 
     const int shiftBorder = 150;
-    const int rightShiftBorder = width() - shiftBorder;
+    const int rightShiftBorder = int(width() - shiftBorder);
 
-    const int visiblePlayerPos = m_currentX - m_worldShift;
+    const int visiblePlayerPos = int(m_currentX - m_worldShift);
 
     const int newWorldShiftRight = visiblePlayerPos - rightShiftBorder;
     if (newWorldShiftRight > 0) {
