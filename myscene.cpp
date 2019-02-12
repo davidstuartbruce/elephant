@@ -1,6 +1,7 @@
 #include <QKeyEvent>
 #include "myscene.h"
 #include "player.h"
+#include "backgrounditem.h"
 
 
 MyScene::MyScene(QObject* parent) :
@@ -52,6 +53,11 @@ void MyScene::movePlayer() {
     const int maxWorldShift = m_fieldWidth - qRound(width());
     m_worldShift = qBound(0, m_worldShift, maxWorldShift);
     m_player->setX(m_currentX - m_worldShift);
+
+    qreal ratio = qreal(m_worldShift)/maxWorldShift;
+    applyParallax(ratio, m_sky);
+    applyParallax(ratio, m_grass);
+    applyParallax(ratio, m_trees);
 
 }
 
