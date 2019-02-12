@@ -9,9 +9,30 @@ class BackgroundItem;
 
 class MyScene : public QGraphicsScene
 {
+    Q_OBJECT
+
+    Q_PROPERTY(qreal jumpFactor
+               READ jumpFactor
+               WRITE setJumpFactor
+               NOTIFY jumpFactorChanged)
+
 
 public:
-    explicit MyScene(QObject* parent);
+    explicit MyScene(QObject* parent = nullptr);
+    qreal jumpFactor() const;
+    void setJumpFactor(const qreal &jumpFactor);
+
+
+private slots:
+    void movePlayer();
+    void checkTimer();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
+signals:
+    void jumpFactorChanged(qreal);
+
 private:
     int m_fieldWidth;
     int m_velocity;
@@ -20,6 +41,8 @@ private:
     qreal m_maxX;
     qreal m_currentX;
     qreal m_groundLevel;
+    qreal m_jumpFactor;
+
     QTimer m_timer;
 
     Player* m_player;
@@ -32,12 +55,6 @@ private:
     void addHorizontalInput(int input);
     void applyParallax(qreal ratio, QGraphicsItem* item);
 
-private slots:
-    void movePlayer();
-    void checkTimer();
-
-protected:
-    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // MYSCENE_H

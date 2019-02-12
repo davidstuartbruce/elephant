@@ -1,4 +1,6 @@
 #include <QKeyEvent>
+#include <float.h>
+#include <cmath>
 #include "myscene.h"
 #include "player.h"
 #include "backgrounditem.h"
@@ -23,6 +25,24 @@ MyScene::MyScene(QObject* parent) :
             this, &MyScene::movePlayer);
 }
 
+qreal MyScene::jumpFactor() const
+{
+    return m_jumpFactor;
+}
+
+void MyScene::setJumpFactor(const qreal &jumpFactor)
+{
+    if(fabs(jumpFactor - m_jumpFactor) < fabs(jumpFactor + m_jumpFactor) * DBL_EPSILON) {
+        return;
+    }
+    m_jumpFactor = jumpFactor;
+    emit jumpFactorChanged(m_jumpFactor);
+}
+
+//void MyScene::jumpFactorChanged(qreal factor) {
+//
+//}
+
 void MyScene::movePlayer() {
     const int direction = m_player->direction();
     if (0 == direction) {
@@ -30,7 +50,8 @@ void MyScene::movePlayer() {
     }
     const int dx = direction * m_velocity;
     qreal newX = qBound(m_minX, m_currentX + dx, m_maxX);
-    if (newX == m_currentX) {
+    // this is a safer way to check whether newX and m_currentX are nearly equal:
+    if (fabs(newX - m_currentX) < fabs(newX + m_currentX) * DBL_EPSILON) {
         return;
     }
     m_currentX = newX;
