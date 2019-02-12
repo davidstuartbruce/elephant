@@ -5,6 +5,7 @@
 #include <QTimer>
 
 class Player;
+class BackgroundItem;
 
 class MyScene : public QGraphicsScene
 {
@@ -20,14 +21,20 @@ private:
     qreal m_currentX;
     qreal m_groundLevel;
     QTimer m_timer;
+
     Player* m_player;
+    BackgroundItem* m_sky;
+    BackgroundItem* m_trees;
+    BackgroundItem* m_grass;
+
     int m_horizontalInput;
 
     void addHorizontalInput(int input);
-    void checkTimer();
+    void applyParallax(qreal ratio, QGraphicsItem* item);
 
 private slots:
     void movePlayer();
+    void checkTimer();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

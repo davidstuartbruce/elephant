@@ -11,7 +11,10 @@ MyScene::MyScene(QObject* parent) :
     m_groundLevel(300),
     m_velocity(4),
     m_worldShift(0),
-    m_player(nullptr)
+    m_player(nullptr),
+    m_sky(nullptr),
+    m_trees(nullptr),
+    m_grass(nullptr)
 
 {
     m_timer.setInterval(30);
@@ -72,6 +75,12 @@ void MyScene::addHorizontalInput(int input) {
     m_player->setDirection(qBound(-1, m_horizontalInput, 1));
     checkTimer();
 }
+
+void MyScene::applyParallax(qreal ratio, QGraphicsItem *item)
+{
+    item->setX(-ratio * (item->boundingRect().width() - width()));
+}
+
 void MyScene::checkTimer() {
     if (m_player->direction() == 0) {
         m_timer.stop();
