@@ -7,9 +7,11 @@ MyScene::MyScene(QObject* parent) :
     QGraphicsScene(parent),
     m_fieldWidth(1500),
     m_minX(0),
-    m_maxX(1500),
+    m_maxX(0),
     m_groundLevel(300),
-    m_velocity(0)
+    m_velocity(4),
+    m_worldShift(0),
+    m_player(nullptr)
 
 {
     m_timer.setInterval(30);
@@ -28,6 +30,26 @@ void MyScene::movePlayer() {
         return;
     }
     m_currentX = newX;
+
+    const int shiftBorder = 150;
+    const int rightShiftBorder = width() - shiftBorder;
+
+    const int visiblePlayerPos = m_currentX - m_worldShift;
+
+    const int newWorldShiftRight = visiblePlayerPos - rightShiftBorder;
+    if (newWorldShiftRight > 0) {
+        m_worldShift += newWorldShiftRight;
+    }
+
+    const int newWorldShiftLeft = shiftBorder - visiblePlayerPos;
+    if (newWorldShiftLeft > 0) {
+        m_worldShift -= newWorldShiftLeft;
+    }
+
+    const int maxWorldShift = m_fieldWidth - qRound(width());
+    m_worldShift = qBound(0, m_worldShift, maxWorldShift);
+    m_player->setX(m_currentX - m_worldShift);
+
 }
 
 void MyScene::keyPressEvent(QKeyEvent *event) {

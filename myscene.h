@@ -14,6 +14,7 @@ public:
 private:
     int m_fieldWidth;
     int m_velocity;
+    int m_worldShift;
     qreal m_minX;
     qreal m_maxX;
     qreal m_currentX;
